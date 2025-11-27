@@ -1,11 +1,7 @@
 {
     "python.defaultInterpreterPath": "./.venv/bin/python",
-    "python.analysis.extraPaths": [
-      "./utils",
-      "./" // Required to properly recognize imports in workers directory, remove after cleanign that directory
-    ],
     "python.testing.pytestArgs": [
-      ".",
+      "server/tests",
       "-vv"
     ],
     "python.testing.unittestEnabled": false,
