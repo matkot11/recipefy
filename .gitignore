@@ -1,0 +1,79 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies
+node_modules/
+venv/
+env/
+ENV/
+.venv
+
+# Build outputs
+dist/
+dist-ssr/
+build/
+*.pyc
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Database
+*.sqlite3
+*.db
+db.sqlite3
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+*.local
+
+# IDE / Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+
+# Testing
+coverage/
+.nyc_output/
+__screenshots__/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Cypress
+/cypress/videos/
+/cypress/screenshots/
+
+# TypeScript
+*.tsbuildinfo
+
+# ESLint
+.eslintcache
+
+# Python
+*.egg-info/
+.eggs/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Django
+*.log
+local_settings.py
+/media
+/staticfiles
+

@@ -1,0 +1,39 @@
+{
+    "folders": [
+      {
+        "name": "⛩️ Recipefy (root)",
+        "path": "."
+      },
+      {
+        "name": "🖥️ Frontend",
+        "path": "./frontend"
+      },
+      {
+        "name": "🏥 Backend",
+        "path": "./backend"
+      }
+    ],
+    "launch": {
+      "compounds": [
+        {
+          "name": "Run Frontend & Backend",
+          "configurations": [
+            {
+              "name": "Frontend",
+              "folder": "🖥️ Frontend"
+            },
+            {
+              "name": "Backend",
+              "folder": "🏥 Backend"
+            }
+          ]
+        }
+      ]
+    },
+    "settings": {
+      "taskfileLauncher.taskfileNames": [
+        "taskfile.yaml",
+        "taskfile.dist.yaml"
+      ]
+    }
+  }

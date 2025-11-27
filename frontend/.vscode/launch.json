@@ -1,0 +1,12 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+      {
+        "name": "Frontend",
+        "consoleName": "Frontend",
+        "command": "npm start",
+        "request": "launch",
+        "type": "node-terminal"
+      }
+    ]
+  }

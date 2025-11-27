@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.1.0",
+    "configurations": [
+      {
+        "name": "Backend",
+        "consoleName": "Backend",
+        "type": "debugpy",
+        "request": "launch",
+        "program": "${workspaceFolder}/server/manage.py",
+        "cwd": "${workspaceFolder}/server",
+        "args": [
+          "runserver",
+          "0.0.0.0:8080"
+        ],
+        "django": true,
+        "justMyCode": false,
+        "env": {
+          "DJANGO_SETTINGS_MODULE": "config.settings"
+        }
+      }
+    ]
+  }
+  

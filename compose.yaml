@@ -1,0 +1,66 @@
+name: recipefy
+
+services:
+  workspace:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: workspace
+      labels:
+        com.recipefy.project: recipefy
+    image: recipefy-workspace:latest
+    container_name: recipefy-workspace
+    ports:
+      - 8080:8080 # Recipefy API
+      - 9000:9000 # Recipefy UI
+    networks:
+      - recipefy-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+    volumes:
+      - .:/app
+      - /app/backend/.venv
+      - /app/frontend/node_modules
+
+  redis:
+    image: redis:7.2.0
+    networks:
+      - recipefy-network
+    labels:
+      com.recipefy.project: recipefy
+
+  postgres:
+    ports:
+      - "${POSTGRESQL_PORT:-5433}:5433"
+    image: postgres:15.14-alpine3.22
+    environment:
+      POSTGRES_USER: recipefy
+      POSTGRES_PASSWORD: recipefy
+      POSTGRES_DB: recipefy
+      PGDATA: "/var/lib/postgresql/data/${DATABASE_ALIAS:-main}"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - recipefy-network
+    labels:
+      com.recipefy.project: recipefy
+
+networks:
+  recipefy-network:
+    name: recipefy-network
+    labels:
+      com.recipefy.project: recipefy
+
+volumes:
+  postgres:
+    labels:
+      com.recipefy.project: recipefy
