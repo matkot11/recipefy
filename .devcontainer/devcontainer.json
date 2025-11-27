@@ -49,7 +49,12 @@
           "vitest.explorer",
           "ms-playwright.playwright",
           "joshx.workspace-terminals"
-        ]
+        ],
+        "settings": {
+          "ruff.interpreter": [
+            "/root/.local/share/uv/tools/ruff/bin/python"
+          ]
+        }
       }
     },
   
