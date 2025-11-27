@@ -31,7 +31,7 @@ RUN uv tool install ruff==0.14.6 \
     && ruff generate-shell-completion bash > ~/.ruff_bash_completion \
     && echo "source $HOME/.ruff_bash_completion" >> ~/.bashrc
 
-# Setup Poetry for MetaBase Application Backend
+# Setup Poetry for Backend
 ENV POETRY_NO_INTERACTION=true \
     POETRY_VIRTUALENVS_CREATE=true \
     POETRY_VIRTUALENVS_IN_PROJECT=true
