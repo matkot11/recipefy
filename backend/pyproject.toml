@@ -5,12 +5,12 @@ description = "Application to create recipes with AI"
 authors = [
     {name = "Mateusz Kocik",email = "matkot11@gmail.com"}
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.14.0"
 dependencies = [
     "django (>=5.2.8,<6.0.0)",
     "djangorestframework (>=3.16.1,<4.0.0)",
     "django-cors-headers (>=4.3.1,<5.0.0)",
-    "psycopg2-binary",
+    "psycopg>=3.1.0",
 ]
 
 [project.optional-dependencies]

@@ -53,7 +53,7 @@ RUN cd /app/frontend \
 
 # --- Initialize Backend ---
 
-COPY backend/pyproject.toml backend/uv.lock \
+COPY backend/pyproject.toml backend/uv.lock backend/.python-version \
     /app/backend/
 
 RUN cd /app/backend \
