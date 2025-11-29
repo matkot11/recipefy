@@ -21,7 +21,7 @@ RUN sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /root/.l
     && echo "source /etc/bash_completion" >> ~/.bashrc \
     && echo "source $HOME/.task_bash_completion" >> ~/.bashrc
 
-# Setup UV (must be installed before using it)
+# Setup UV
 COPY --from=ghcr.io/astral-sh/uv:0.6.14 /uv /uvx /bin/
 RUN uv generate-shell-completion bash > ~/.uv_bash_completion \
     && echo "source $HOME/.uv_bash_completion" >> ~/.bashrc
@@ -30,12 +30,6 @@ RUN uv generate-shell-completion bash > ~/.uv_bash_completion \
 RUN uv tool install ruff==0.14.6 \
     && ruff generate-shell-completion bash > ~/.ruff_bash_completion \
     && echo "source $HOME/.ruff_bash_completion" >> ~/.bashrc
-
-# Setup Poetry for Backend
-ENV POETRY_NO_INTERACTION=true \
-    POETRY_VIRTUALENVS_CREATE=true \
-    POETRY_VIRTUALENVS_IN_PROJECT=true
-RUN uv tool install --python 3.12.8 --verbose poetry==2.2.0
 
 WORKDIR /app
 CMD [ "/bin/bash" ]
@@ -59,10 +53,9 @@ RUN cd /app/frontend \
 
 # --- Initialize Backend ---
 
-COPY backend/pyproject.toml backend/poetry.lock \
+COPY backend/pyproject.toml backend/uv.lock \
     /app/backend/
 
 RUN cd /app/backend \
-    && poetry install --no-root --no-cache \
-    && rm -rf ~/.cache/pypoetry \
+    && uv sync --frozen \
     && cd /app
