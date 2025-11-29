@@ -11,7 +11,19 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-import os
+from environs import Env
+
+env = Env()
+env.read_env(
+    path=str(Path(Path(__file__).parent, "..", "..", ".env.default").absolute()),
+    recurse=False,
+)
+env.read_env(
+    path=str(Path(Path(__file__).parent, "..", "..", ".env").absolute()),
+    recurse=False,
+    override=True,
+)
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -80,15 +92,34 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("POSTGRES_DB", "recipefy"),
-        "USER": os.getenv("POSTGRES_USER", "recipefy"),
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD", "recipefy"),
-        "HOST": os.getenv("POSTGRES_HOST", "postgres"),
-        "PORT": os.getenv("POSTGRES_PORT", "5432"),
+        "NAME": env.str("DATABASE_NAME"),
+        "USER": env.str("DATABASE_USER"),
+        "PASSWORD": env.str("DATABASE_PASSWORD"),
+        "HOST": env.str("DATABASE_HOST"),
+        "PORT": env.str("DATABASE_PORT", 5432),
         "OPTIONS": {
             "connect_timeout": 10,
         },
         "CONN_MAX_AGE": 600,  # Persistent connections
+    }
+}
+
+# Cache
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://{host}:{port}/{db}".format(  # pylint: disable = consider-using-f-string
+            host=env.str("CACHE_HOST"),
+            port=env.int("CACHE_PORT", 6379),
+            db=env.int("CACHE_DB", 1),
+        ),
+        "OPTIONS": {
+            "PARSER_CLASS": "redis.connection.HiredisParser",
+            "IGNORE_EXCEPTIONS": True,
+            "SOCKET_TIMEOUT": 5,
+            "SOCKET_CONNECT_TIMEOUT": 5,
+        },
     }
 }
 
