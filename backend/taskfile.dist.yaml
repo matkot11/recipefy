@@ -1,0 +1,59 @@
+version: "3"
+
+dir: "{{.TASKFILE_DIR}}"
+silent: true
+
+vars:
+  VENV_PATH: "{{.TASKFILE_DIR}}/.venv"
+  PYTHON_INTERPRETER: "{{.VENV_PATH}}/bin/python"
+
+tasks:
+  run-server:
+    desc: "Run backend API dev server"
+    cmd: "{{.PYTHON_INTERPRETER}} server/manage.py runserver 0.0.0.0:8080 --insecure"
+
+  run-db-migrate:
+    desc: "Run backend database migrations"
+    cmd: "{{.PYTHON_INTERTER}} server/manage.py migrate"
+
+  make-migrations:
+    desc: "Generate Django migrations for model changes"
+    cmd: "{{.PYTHON_INTERPRETER}} server/manage.py makemigrations"
+
+  lint-ruff:
+    desc: "Run backend Ruff linter"
+    cmd: "uv tool run ruff check {{.TASKFILE_DIR}}"
+
+  lint-ruff-fix:
+    desc: "Run backend Ruff linter in FIX MODE"
+    cmd: "uv tool run ruff check --fix ."
+
+  format:
+    desc: "Run backend formatters on all Python files"
+    cmd: "uv tool run ruff format ."
+
+  test:
+    desc: "Run backend unit tests"
+    cmd: "{{.VENV_PATH}}/bin/pytest -vv"
+
+  test-coverage:
+    desc: "Run backend unit tests with coverage"
+    cmd: "{{.VENV_PATH}}/bin/pytest -vv --cov=server"
+
+  test-coverage-report:
+    desc: "Run backend unit tests with coverage and generate HTML report"
+    cmd: "{{.VENV_PATH}}/bin/pytest -vv --cov=server --cov-report html"
+
+  update-lockfile:
+    desc: "Update uv.lock file"
+    cmd: "uv lock"
+  
+  create-admin-user:
+    desc: "Create backend admin user"
+    env:
+      DJANGO_SUPERUSER_USERNAME: "admin"
+      DJANGO_SUPERUSER_PASSWORD: "admin"
+      DJANGO_SUPERUSER_FIRST_NAME: "admin"
+      DJANGO_SUPERUSER_LAST_NAME: "admin"
+      DJANGO_SUPERUSER_EMAIL: "admin@example.com"
+    cmd: "{{.PYTHON_INTERPRETER}} server/manage.py createsuperuser --no-input"
