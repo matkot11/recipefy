@@ -1,0 +1,65 @@
+name: PostgreSQL Service
+
+on:
+  workflow_call:
+    inputs:
+      run_id:
+        description: "Run ID from Docker Image CI workflow"
+        required: true
+        type: string
+      job_name:
+        description: "Name of the job"
+        required: true
+        type: string
+      django_settings_module:
+        description: "Django settings module to use"
+        required: true
+        type: string
+      run:
+        description: "Command to run"
+        required: true
+        type: string
+
+jobs:
+  postgres-job:
+    name: ${{ inputs.job_name }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+
+    services:
+      postgres:
+        image: postgres:15.14-alpine3.22
+        env:
+          POSTGRES_USER: recipefy
+          POSTGRES_PASSWORD: recipefy
+          POSTGRES_DB: recipefy
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    container:
+      image: ghcr.io/${{ github.repository }}/workspace:ci-${{ inputs.run_id }}
+      env:
+        DJANGO_SETTINGS_MODULE: ${{ inputs.django_settings_module }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DATABASE_HOST: postgres
+        DATABASE_PORT: 5432
+        DATABASE_USER: recipefy
+        DATABASE_PASSWORD: recipefy
+        DATABASE_NAME: recipefy
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run
+        working-directory: ${{ github.workspace }}/backend
+        env:
+          PYTHONPATH: ${{ github.workspace }}/backend
+        run: ${{ inputs.run }}
