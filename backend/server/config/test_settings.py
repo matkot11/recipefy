@@ -2,7 +2,7 @@
 Test settings - uses separate test database to avoid touching real database
 """
 
-from .settings import *
+from .settings import *  # noqa: F403
 import os
 
 # Use a separate PostgreSQL test database (completely isolated from production)

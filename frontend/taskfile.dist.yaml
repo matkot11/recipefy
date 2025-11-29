@@ -1,0 +1,9 @@
+version: '3'
+
+dir: '{{.TASKFILE_DIR}}'
+silent: true
+
+tasks:
+  run-test-unit-coverage:
+    desc: Run Unit tests and generate coverage report
+    cmd: npm run test:unit:coverage
