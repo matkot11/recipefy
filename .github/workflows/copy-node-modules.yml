@@ -1,0 +1,44 @@
+name: Copy Node Modules
+
+on:
+  workflow_call:
+    inputs:
+      run_id:
+        description: "Run ID from Docker Image CI workflow"
+        required: true
+        type: string
+      job_name:
+        description: "Name of the job"
+        required: true
+        type: string
+      run:
+        description: "Command to run"
+        required: true
+        type: string
+
+jobs:
+  frontend-job:
+    name: ${{ inputs.job_name }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+
+    container:
+      image: ghcr.io/${{ github.repository }}/workspace:ci-${{ inputs.run_id }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Link node_modules from Docker build
+        working-directory: ${{ github.workspace }}/frontend
+        run: |
+          ln -s /app/frontend/node_modules node_modules
+
+      - name: Run
+        working-directory: ${{ github.workspace }}/frontend
+        run: ${{ inputs.run }}
+

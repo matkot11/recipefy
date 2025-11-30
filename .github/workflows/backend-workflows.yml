@@ -1,0 +1,49 @@
+name: Backend Unit Tests
+
+on:
+  workflow_call:
+    inputs:
+      run_id:
+        description: "Run ID from Docker Image CI workflow"
+        required: true
+        type: string
+
+jobs:
+  backend-unit-tests:
+    uses: ./.github/workflows/postgres-service.yml
+    with:
+      run_id: ${{ inputs.run_id }}
+      job_name: 🧪 Backend Unit Tests
+      django_settings_module: config.test_settings
+      run: /app/backend/.venv/bin/pytest -vv --cov=server --cov-report=xml --cov-report=term
+    secrets: inherit
+
+  backend-format-check:
+    name: 🔍 Backend Format Check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+
+    container:
+      image: ghcr.io/${{ github.repository }}/workspace:ci-${{ inputs.run_id }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check ruff format
+        working-directory: ${{ github.workspace }}/backend
+        run: |
+          uv tool run ruff format --check .
+
+  django-migrations-check:
+    uses: ./.github/workflows/postgres-service.yml
+    with:
+      run_id: ${{ inputs.run_id }}
+      job_name: 🔄 Django Migrations Check
+      django_settings_module: config.settings
+      run: /app/backend/.venv/bin/python server/manage.py makemigrations --check
+    secrets: inherit

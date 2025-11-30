@@ -1,0 +1,27 @@
+name: Frontend Unit Tests
+
+on:
+  workflow_call:
+    inputs:
+      run_id:
+        description: "Run ID from Docker Image CI workflow"
+        required: true
+        type: string
+
+jobs:
+  frontend-unit-tests:
+    uses: ./.github/workflows/copy-node-modules.yml
+    with:
+      run_id: ${{ inputs.run_id }}
+      job_name: 🧪 Frontend Unit Tests
+      run: npm run test:unit:coverage
+    secrets: inherit
+
+  frontend-format-check:
+    uses: ./.github/workflows/copy-node-modules.yml
+    with:
+      run_id: ${{ inputs.run_id }}
+      job_name: 🔍 Frontend Format Check
+      run: npm run lint
+    secrets: inherit
+
