@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@theme {
+  --color-yellow: #F0EE91;
+  --color-dark-blue: #2F66FF;
+  --color-green: #11AB00;
+  --color-red: #E62B2B;
+
+  --font-montserrat: "Montserrat", sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+}
