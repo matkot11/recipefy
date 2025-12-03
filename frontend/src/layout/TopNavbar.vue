@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Menu, X } from 'lucide-vue-next'
 
+import TitleComponent from '@/components/TitleComponent.vue'
+
 defineEmits<{
   (e: 'update:modelValue', value: boolean): void
 }>()
@@ -16,8 +18,6 @@ defineProps<{
       <component :is="modelValue ? X : Menu" :stroke-width="3" />
     </button>
 
-    <h1 class="text-dark-blue font-montserrat cursor-default text-2xl font-bold tracking-wide">
-      Recipefy
-    </h1>
+    <TitleComponent />
   </div>
 </template>
