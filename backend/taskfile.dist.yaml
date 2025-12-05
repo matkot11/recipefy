@@ -57,3 +57,12 @@ tasks:
       DJANGO_SUPERUSER_LAST_NAME: "admin"
       DJANGO_SUPERUSER_EMAIL: "admin@example.com"
     cmd: "{{.PYTHON_INTERPRETER}} server/manage.py createsuperuser --no-input"
+
+  generate-openapi-schema:
+    desc: "Generate OpenAPI schema"
+    cmd: "{{.PYTHON_INTERPRETER}} server/manage.py spectacular --color --file server/schema.yml"
+
+  clean-cache-files:
+    desc: "Clean cache files"
+    cmds:
+      - "rm -rfv .ruff_cache .pytest_cache .pytest_coverage .coverage .testmondata*"

@@ -1,0 +1,41 @@
+openapi: 3.0.3
+info:
+  title: Recipefy API
+  version: 1.0.0
+  description: API for Recipefy
+paths:
+  /api/hello/:
+    get:
+      operationId: hello_retrieve
+      description: This is a test endpoint to check if the API is working.
+      summary: Hello World
+      tags:
+      - hello
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hello'
+          description: ''
+components:
+  schemas:
+    Hello:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+      - message
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
