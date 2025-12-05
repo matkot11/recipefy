@@ -52,13 +52,27 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "corsheaders",
+    "drf_spectacular",
     "api",
 ]
 
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Recipefy API",
+    "DESCRIPTION": "API for Recipefy",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}
+
+SPECTACULAR_SCHEMA_FILE_PATH = env.str("SPECTACULAR_SCHEMA_FILE_PATH", "schema.yml")
+
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -92,11 +106,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": env.str("DATABASE_NAME"),
-        "USER": env.str("DATABASE_USER"),
-        "PASSWORD": env.str("DATABASE_PASSWORD"),
-        "HOST": env.str("DATABASE_HOST"),
-        "PORT": env.str("DATABASE_PORT", 5432),
+        "NAME": env.str("DATABASE_NAME", "recipefy"),
+        "USER": env.str("DATABASE_USER", "postgres"),
+        "PASSWORD": env.str("DATABASE_PASSWORD", "postgres"),
+        "HOST": env.str("DATABASE_HOST", "localhost"),
+        "PORT": env.str("DATABASE_PORT", "5432"),
         "OPTIONS": {
             "connect_timeout": 10,
         },
@@ -110,7 +124,7 @@ CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://{host}:{port}/{db}".format(  # pylint: disable = consider-using-f-string
-            host=env.str("CACHE_HOST"),
+            host=env.str("CACHE_HOST", "localhost"),
             port=env.int("CACHE_PORT", 6379),
             db=env.int("CACHE_DB", 1),
         ),
@@ -166,9 +180,12 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # CORS settings
+CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:9000",
     "http://127.0.0.1:9000",
 ]
-
-CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:9000",
+    "http://127.0.0.1:9000",
+]

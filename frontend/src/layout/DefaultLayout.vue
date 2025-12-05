@@ -47,7 +47,7 @@ watch(
       <TopNavbar v-model="isSidebarOpen" class="md:hidden" />
 
       <DefaultNavigation
-        class="navigation absolute top-12 left-0 hidden h-screen w-full md:static md:top-auto md:block"
+        class="navigation absolute top-12 left-0 hidden h-[calc(100vh-48px)] w-full md:static md:top-auto md:block"
       />
     </div>
 

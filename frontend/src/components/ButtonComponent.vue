@@ -19,7 +19,7 @@ withDefaults(
   <component
     :is="link ? RouterLink : 'button'"
     :to="to"
-    class="bg-yellow text-dark-blue font-montserrat hover:bg-dark-blue hover:text-yellow cursor-pointer rounded-md px-4 py-2 text-lg font-semibold transition-all duration-200 lg:py-3 lg:text-xl"
+    class="bg-yellow text-dark-blue font-montserrat hover:bg-dark-blue hover:text-yellow active:bg-dark-blue active:text-yellow cursor-pointer rounded-md px-4 py-2 text-lg font-semibold transition-all duration-200 lg:py-3 lg:text-xl"
   >
     <slot />
   </component>

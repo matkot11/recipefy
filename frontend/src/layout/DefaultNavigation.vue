@@ -8,7 +8,7 @@ import { PATHS } from '@/router/paths'
 
 <template>
   <div
-    class="bg-yellow flex h-[calc(100vh-48px)] justify-center pt-16 md:h-screen md:w-64 md:flex-col md:justify-start md:pt-4 md:pl-8 lg:w-72"
+    class="bg-yellow flex justify-center pt-16 md:h-screen md:w-64 md:flex-col md:justify-start md:pt-4 md:pl-8 lg:w-72"
   >
     <TitleComponent class="hidden md:block" />
 

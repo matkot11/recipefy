@@ -22,7 +22,7 @@ RUN sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /root/.l
     && echo "source $HOME/.task_bash_completion" >> ~/.bashrc
 
 # Setup UV
-COPY --from=ghcr.io/astral-sh/uv:0.6.14 /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.9.15 /uv /uvx /bin/
 RUN uv generate-shell-completion bash > ~/.uv_bash_completion \
     && echo "source $HOME/.uv_bash_completion" >> ~/.bashrc
 
@@ -57,5 +57,6 @@ COPY backend/pyproject.toml backend/uv.lock backend/.python-version \
     /app/backend/
 
 RUN cd /app/backend \
+    && uv python install 3.14.1 \
     && uv sync --frozen \
     && cd /app
