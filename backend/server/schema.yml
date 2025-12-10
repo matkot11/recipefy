@@ -4,13 +4,13 @@ info:
   version: 1.0.0
   description: API for Recipefy
 paths:
-  /api/hello/:
+  /api/auth/csrf-token/:
     get:
-      operationId: hello_retrieve
-      description: This is a test endpoint to check if the API is working.
-      summary: Hello World
+      operationId: auth_csrf_token_retrieve
+      description: Set the CSRF cookie on the frontend.
+      summary: Set CSRF Token
       tags:
-      - hello
+      - auth
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -20,17 +20,148 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Hello'
+                detail: CSRF cookie set
+          description: ''
+  /api/auth/login/:
+    post:
+      operationId: auth_login_create
+      description: Login a user
+      summary: Login a user
+      tags:
+      - auth
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                detail: User logged in
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                detail: Invalid email or password
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                detail: Internal server error
+          description: ''
+  /api/auth/logout/:
+    post:
+      operationId: auth_logout_create
+      description: Logout a user
+      summary: Logout a user
+      tags:
+      - auth
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                detail: Logged out
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                detail: Not logged in
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                detail: Internal server error
+          description: ''
+  /api/auth/register/:
+    post:
+      operationId: auth_register_create
+      description: Register user
+      summary: Register user
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Register'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Register'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                detail: User registered successfully
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                detail: Invalid data
+          description: ''
+  /api/auth/user/:
+    get:
+      operationId: auth_user_retrieve
+      description: Get user
+      summary: Get user
+      tags:
+      - auth
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                username: string
+                email: string
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                detail: Not logged in
           description: ''
 components:
   schemas:
-    Hello:
+    Register:
       type: object
       properties:
-        message:
+        email:
+          type: string
+          format: email
+        username:
+          type: string
+        password:
+          type: string
+        password_confirmation:
           type: string
       required:
-      - message
+      - email
+      - password
+      - password_confirmation
+      - username
   securitySchemes:
     basicAuth:
       type: http

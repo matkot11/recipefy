@@ -3,5 +3,6 @@ export const PATHS = {
   addRecipe: '/add-recipe',
   myRecipes: '/my-recipes',
   allRecipes: '/all-recipes',
-  authenticate: '/authenticate',
+  register: '/register',
+  login: '/login',
 } as const
