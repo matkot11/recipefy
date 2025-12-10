@@ -4,7 +4,6 @@ from django.views.generic import RedirectView
 
 from config.routers import DefaultExtendableRouter
 from config.generators import serve_schema_file
-from api.views import HelloApi
 
 router = DefaultExtendableRouter()
 
@@ -20,7 +19,7 @@ apiUrls = [
         RedirectView.as_view(url="/api/", permanent=True),
         name="swagger-ui-redirect",
     ),
-    path("hello/", HelloApi.as_view()),
+    path("auth/", include("authentication.api.urls")),
 ]
 
 urlpatterns = [

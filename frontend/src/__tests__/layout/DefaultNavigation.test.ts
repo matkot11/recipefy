@@ -1,10 +1,12 @@
 import userEvent from '@testing-library/user-event'
 import { render } from '@testing-library/vue'
+import { createPinia, setActivePinia } from 'pinia'
 import { createRouter, createWebHistory, type Router } from 'vue-router'
 
 import type { RenderResultWithUser } from '@/__tests__/setup/typings'
 import DefaultNavigation from '@/layout/DefaultNavigation.vue'
 import { PATHS } from '@/router/paths'
+import { useAuthStore } from '@/store/authStore'
 
 describe('DefaultNavigation', () => {
   let wrapper: RenderResultWithUser
@@ -22,6 +24,8 @@ describe('DefaultNavigation', () => {
   }
 
   beforeEach(async () => {
+    setActivePinia(createPinia())
+
     router = createRouter({
       history: createWebHistory(),
       routes: [
@@ -42,7 +46,7 @@ describe('DefaultNavigation', () => {
           component: {},
         },
         {
-          path: PATHS.authenticate,
+          path: PATHS.register,
           component: {},
         },
       ],
@@ -55,12 +59,26 @@ describe('DefaultNavigation', () => {
     { path: PATHS.addRecipe, text: 'Add Recipe' },
     { path: PATHS.myRecipes, text: 'My Recipes' },
     { path: PATHS.allRecipes, text: 'All Recipes' },
-    { path: PATHS.authenticate, text: 'Authenticate' },
+    { path: PATHS.register, text: 'Authenticate' },
   ])('should redirect user to $path', async ({ path, text }) => {
     wrapper = renderComponent()
 
     await wrapper.user.click(wrapper.getByText(text))
 
     expect(router.currentRoute.value.path).toBe(path)
+  })
+
+  it('should display the logout button if the user is logged in', async () => {
+    const authStore = useAuthStore()
+    authStore.user = {
+      id: 1,
+      username: 'test',
+      email: 'test@test.com',
+    }
+
+    wrapper = renderComponent()
+
+    expect(wrapper.getByRole('button', { name: 'Logout' })).toBeVisible()
+    expect(wrapper.queryByRole('link', { name: 'Authenticate' })).not.toBeInTheDocument()
   })
 })

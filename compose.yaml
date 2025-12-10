@@ -13,6 +13,12 @@ services:
     ports:
       - 8080:8080 # Recipefy API
       - 9000:9000 # Recipefy UI
+    environment:
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USER: recipefy
+      DATABASE_PASSWORD: recipefy
+      DATABASE_NAME: recipefy
     networks:
       - recipefy-network
     depends_on:
@@ -35,7 +41,7 @@ services:
 
   postgres:
     ports:
-      - "${POSTGRESQL_PORT:-5433}:5433"
+      - "${POSTGRESQL_PORT:-5432}:5432"
     image: postgres:15.14-alpine3.22
     environment:
       POSTGRES_USER: recipefy

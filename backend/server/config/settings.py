@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "drf_spectacular",
-    "api",
+    "authentication",
 ]
 
 REST_FRAMEWORK = {

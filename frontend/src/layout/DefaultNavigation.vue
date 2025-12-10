@@ -4,6 +4,9 @@ import { RouterLink } from 'vue-router'
 
 import TitleComponent from '@/components/TitleComponent.vue'
 import { PATHS } from '@/router/paths'
+import { useAuthStore } from '@/store/authStore'
+
+const authStore = useAuthStore()
 </script>
 
 <template>
@@ -38,12 +41,22 @@ import { PATHS } from '@/router/paths'
       </RouterLink>
 
       <RouterLink
-        :to="PATHS.authenticate"
+        v-if="!authStore.user"
+        :to="PATHS.register"
         class="font-montserrat hover:text-dark-blue flex items-center gap-1 text-lg font-semibold lg:text-xl"
       >
         <span>Authenticate</span>
         <ChevronRight :size="20" :stroke-width="3" />
       </RouterLink>
+
+      <button
+        v-else
+        class="font-montserrat hover:text-dark-blue flex cursor-pointer items-center gap-1 text-lg font-semibold lg:text-xl"
+        @click="authStore.handleLogout()"
+      >
+        <span>Logout</span>
+        <ChevronRight :size="20" :stroke-width="3" />
+      </button>
     </nav>
   </div>
 </template>
