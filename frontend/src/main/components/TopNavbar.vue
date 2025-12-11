@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Menu, X } from 'lucide-vue-next'
 
-import TitleComponent from '@/components/TitleComponent.vue'
+import TitleComponent from '@/main/components/TitleComponent.vue'
 
 defineEmits<{
   (e: 'update:modelValue', value: boolean): void

@@ -2,8 +2,8 @@
 import { animate, splitText, stagger } from 'animejs'
 import { onMounted } from 'vue'
 
-import ButtonComponent from '@/components/ButtonComponent.vue'
-import TitleComponent from '@/components/TitleComponent.vue'
+import ButtonComponent from '@/commons/components/ButtonComponent.vue'
+import TitleComponent from '@/main/components/TitleComponent.vue'
 
 onMounted(() => {
   const titleElement = document.querySelector('.title')

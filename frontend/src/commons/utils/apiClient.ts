@@ -1,12 +1,12 @@
 import axios, { type AxiosInstance } from 'axios'
 
-import { useAuthStore } from '@/store/authStore'
+import { useAuthStore } from '@/auth/store'
 
 export const apiClient = (): AxiosInstance => {
   const { csrfToken } = useAuthStore()
 
   return axios.create({
-    baseURL: 'http://localhost:8080/api',
+    baseURL: `${import.meta.env.VITE_API_URL}/api`,
     headers: {
       'Content-Type': 'application/json',
       'X-CSRFToken': csrfToken,

@@ -3,8 +3,8 @@ import { render } from '@testing-library/vue'
 import { createRouter, createWebHistory, type Router } from 'vue-router'
 
 import type { RenderResultWithUser } from '@/__tests__/setup/typings'
+import MainView from '@/main/components/MainView.vue'
 import { PATHS } from '@/router/paths'
-import MainView from '@/views/MainView.vue'
 
 vi.mock('animejs', () => ({
   default: {

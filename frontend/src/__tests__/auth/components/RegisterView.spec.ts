@@ -3,9 +3,9 @@ import { render, waitFor } from '@testing-library/vue'
 import { createPinia, setActivePinia } from 'pinia'
 
 import type { RenderResultWithUser } from '@/__tests__/setup/typings'
+import RegisterView from '@/auth/components/RegisterView.vue'
 import router from '@/router'
 import { PATHS } from '@/router/paths'
-import RegisterView from '@/views/RegisterView.vue'
 
 const handleRegisterMock = vi
   .fn()
@@ -13,7 +13,7 @@ const handleRegisterMock = vi
 const handleLoginMock = vi
   .fn()
   .mockResolvedValue({ data: { detail: 'User logged in successfully' } })
-vi.mock('@/store/authStore', () => ({
+vi.mock('@/auth/store', () => ({
   useAuthStore: vi.fn(() => ({
     handleRegister: handleRegisterMock,
     handleLogin: handleLoginMock,
