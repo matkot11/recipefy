@@ -2,8 +2,8 @@
 import { animate } from 'animejs'
 import { ref, watch } from 'vue'
 
-import DefaultNavigation from '@/layout/DefaultNavigation.vue'
-import TopNavbar from '@/layout/TopNavbar.vue'
+import DefaultNavigation from '@/main/components/DefaultNavigation.vue'
+import TopNavbar from '@/main/components/TopNavbar.vue'
 
 const isSidebarOpen = ref(false)
 

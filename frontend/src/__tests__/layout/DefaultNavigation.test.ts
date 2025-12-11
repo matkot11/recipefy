@@ -4,9 +4,9 @@ import { createPinia, setActivePinia } from 'pinia'
 import { createRouter, createWebHistory, type Router } from 'vue-router'
 
 import type { RenderResultWithUser } from '@/__tests__/setup/typings'
-import DefaultNavigation from '@/layout/DefaultNavigation.vue'
+import { useAuthStore } from '@/auth/store'
+import DefaultNavigation from '@/main/components/DefaultNavigation.vue'
 import { PATHS } from '@/router/paths'
-import { useAuthStore } from '@/store/authStore'
 
 describe('DefaultNavigation', () => {
   let wrapper: RenderResultWithUser

@@ -2,12 +2,12 @@
 import { Form } from 'vee-validate'
 import * as yup from 'yup'
 
-import ButtonComponent from '@/components/ButtonComponent.vue'
-import InputComponent from '@/components/InputComponent.vue'
+import { useAuthStore } from '@/auth/store'
+import type { RegisterData } from '@/auth/typings'
+import ButtonComponent from '@/commons/components/ButtonComponent.vue'
+import InputComponent from '@/commons/components/InputComponent.vue'
 import router from '@/router'
 import { PATHS } from '@/router/paths'
-import { useAuthStore } from '@/store/authStore'
-import type { RegisterData } from '@/typings/authStore'
 
 const schema = yup
   .object({

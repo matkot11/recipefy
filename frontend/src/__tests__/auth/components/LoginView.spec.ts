@@ -3,9 +3,9 @@ import { render, waitFor } from '@testing-library/vue'
 import { createPinia, setActivePinia } from 'pinia'
 
 import type { RenderResultWithUser } from '@/__tests__/setup/typings'
+import LoginView from '@/auth/components/LoginView.vue'
 import router from '@/router'
 import { PATHS } from '@/router/paths'
-import LoginView from '@/views/LoginView.vue'
 
 const EMAIL = 'test@test.com'
 const PASSWORD = 'password'
@@ -13,7 +13,7 @@ const PASSWORD = 'password'
 const handleLoginMock = vi
   .fn()
   .mockResolvedValue({ data: { user: { id: 1, email: EMAIL, username: 'test' } } })
-vi.mock('@/store/authStore', () => ({
+vi.mock('@/auth/store', () => ({
   useAuthStore: vi.fn(() => ({
     handleLogin: handleLoginMock,
   })),

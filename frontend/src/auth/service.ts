@@ -1,4 +1,4 @@
-import { apiClient } from '@/utils/apiClient'
+import { apiClient } from '@/commons/utils/apiClient'
 
 export const authService = () => {
   const getCsrfToken = async () => await apiClient().get('/auth/csrf-token/')

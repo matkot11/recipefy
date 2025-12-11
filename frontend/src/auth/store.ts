@@ -3,8 +3,8 @@ import { useCookies } from '@vueuse/integrations/useCookies'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
-import { authService } from '@/service/auth'
-import type { LoginData, RegisterData, User } from '@/typings/authStore'
+import { authService } from '@/auth/service'
+import type { LoginData, RegisterData, User } from '@/auth/typings'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)

@@ -2,9 +2,9 @@
 import { ChevronRight } from 'lucide-vue-next'
 import { RouterLink } from 'vue-router'
 
-import TitleComponent from '@/components/TitleComponent.vue'
+import { useAuthStore } from '@/auth/store'
+import TitleComponent from '@/main/components/TitleComponent.vue'
 import { PATHS } from '@/router/paths'
-import { useAuthStore } from '@/store/authStore'
 
 const authStore = useAuthStore()
 </script>

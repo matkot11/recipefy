@@ -1,6 +1,6 @@
 import { createPinia, setActivePinia } from 'pinia'
 
-import { useAuthStore } from '@/store/authStore'
+import { useAuthStore } from '@/auth/store'
 
 const ID = 1
 const EMAIL = 'test@test.com'
@@ -13,7 +13,7 @@ const loginMock = vi
   .fn()
   .mockResolvedValue({ data: { user: { id: ID, email: EMAIL, username: USERNAME } } })
 const logoutMock = vi.fn().mockResolvedValue({ data: { detail: 'User logged out successfully' } })
-vi.mock('@/service/auth', () => ({
+vi.mock('@/auth/service', () => ({
   authService: vi.fn(() => ({
     getCsrfToken: getCsrfTokenMock,
     login: loginMock,
